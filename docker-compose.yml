@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  dailydev-db:
+    image: postgres:latest
+    container_name: dailydev-db
+    environment:
+      POSTGRES_DB: dailydev
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
