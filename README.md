@@ -11,6 +11,10 @@ O **DailyDev** é um projeto backend desenvolvido em **Java com Spring Boot**, c
 Tudo isso com persistência em banco de dados, documentação automática via Swagger e pronto para produção com Docker! 🐳
 
 ---
+## 📌 Versão Atual
+
+`v1.0.0` — Primeira versão estável com CRUD completo, Swagger, validações, tratamento de exceções e Docker.
+
 
 ## 📚 Tecnologias Utilizadas
 
