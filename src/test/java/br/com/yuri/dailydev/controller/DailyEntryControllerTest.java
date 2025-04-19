@@ -1,6 +1,7 @@
 package br.com.yuri.dailydev.controller;
 
 import br.com.yuri.dailydev.dto.DailyEntryRequest;
+import br.com.yuri.dailydev.exception.ResourceNotFoundException;
 import br.com.yuri.dailydev.mapper.DailyEntryMapper;
 import br.com.yuri.dailydev.model.DailyEntry;
 import br.com.yuri.dailydev.model.enums.HumorDoDia;
@@ -153,6 +154,68 @@ class DailyEntryControllerTest {
         mockMvc.perform(delete("/dailyentry/{id}", id))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void testGetDailyEntryById_NotFound() throws Exception {
+        Long id = 999L;
+
+        // Simula exceção de recurso não encontrado
+        when(dailyEntryService.findById(id))
+                .thenThrow(new ResourceNotFoundException("Entrada com ID " + id + " não encontrada."));
+
+        mockMvc.perform(get("/dailyentry/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.erro").value("Entrada com ID " + id + " não encontrada."));
+    }
+
+    @Test
+    void testAddDailyEntry_InvalidRequest_ReturnsBadRequest() throws Exception {
+        // Requisição com campos inválidos
+        DailyEntryRequest request = new DailyEntryRequest();
+        request.setData(null); // data obrigatória
+        request.setHorasEstudadas(-2); // valor inválido
+        request.setHumor(null); // obrigatório
+        request.setTecnologiasEstudadas(""); // inválido
+
+        String jsonBody = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(post("/dailyentry")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.erros.data").exists())
+                .andExpect(jsonPath("$.erros.horasEstudadas").exists())
+                .andExpect(jsonPath("$.erros.humor").exists())
+                .andExpect(jsonPath("$.erros.tecnologiasEstudadas").exists());
+    }
+
+    @Test
+    void testUpdateDailyEntry_InvalidRequest_ReturnsBadRequest() throws Exception {
+        Long id = 1L;
+
+        // JSON inválido (horasEstudadas ausente)
+        String jsonBody = """
+        {
+            "data": null,
+            "humor": null,
+            "tecnologiasEstudadas": ""
+        }
+    """;
+
+        mockMvc.perform(put("/dailyentry/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.erros.data").exists())
+                .andExpect(jsonPath("$.erros.horasEstudadas").exists())
+                .andExpect(jsonPath("$.erros.humor").exists())
+                .andExpect(jsonPath("$.erros.tecnologiasEstudadas").exists());
+    }
+
+
+
+
+
 
 
 
