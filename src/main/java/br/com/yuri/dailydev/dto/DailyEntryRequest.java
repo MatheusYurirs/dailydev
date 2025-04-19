@@ -4,6 +4,7 @@ import br.com.yuri.dailydev.model.enums.HumorDoDia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,8 +16,9 @@ public class DailyEntryRequest {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 
-    @NotNull(message = "Horas estudadas são obrigatórios")
-    private int horasEstudadas;
+    @NotNull(message = "Horas estudadas são obrigatórias")
+    @Min(value = 0, message = "Horas estudadas deve ser maior ou igual a 0")
+    private Integer horasEstudadas;
 
     @NotNull
     @Enumerated(EnumType.STRING)
