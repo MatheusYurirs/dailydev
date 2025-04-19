@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -211,6 +210,21 @@ class DailyEntryControllerTest {
                 .andExpect(jsonPath("$.erros.humor").exists())
                 .andExpect(jsonPath("$.erros.tecnologiasEstudadas").exists());
     }
+
+    @Test
+    void testDeleteDailyEntryById_NotFound_Returns404() throws Exception {
+        Long id = 999L;
+
+        // Simula que o serviço lança exceção quando não encontra
+        doThrow(new ResourceNotFoundException("Entrada com ID " + id + " não encontrada."))
+                .when(dailyEntryService).deleteById(id);
+
+        // Realiza a chamada DELETE
+        mockMvc.perform(delete("/dailyentry/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.erro").value("Entrada com ID " + id + " não encontrada."));
+    }
+
 
 
 
