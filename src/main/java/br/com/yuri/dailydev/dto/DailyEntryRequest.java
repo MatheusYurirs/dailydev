@@ -45,7 +45,7 @@ public class DailyEntryRequest {
         return horasEstudadas;
     }
 
-    public void setHorasEstudadas(int horasEstudadas) {
+    public void setHorasEstudadas(Integer horasEstudadas) {
         this.horasEstudadas = horasEstudadas;
     }
 
