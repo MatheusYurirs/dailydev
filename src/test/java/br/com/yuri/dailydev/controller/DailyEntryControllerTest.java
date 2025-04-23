@@ -1,6 +1,6 @@
 package br.com.yuri.dailydev.controller;
 
-import br.com.yuri.dailydev.dto.DailyEntryRequest;
+import br.com.yuri.dailydev.dto.request.DailyEntryRequest;
 import br.com.yuri.dailydev.exception.ResourceNotFoundException;
 import br.com.yuri.dailydev.mapper.DailyEntryMapper;
 import br.com.yuri.dailydev.model.DailyEntry;
@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;

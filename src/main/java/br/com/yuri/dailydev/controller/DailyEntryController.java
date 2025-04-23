@@ -1,7 +1,7 @@
 package br.com.yuri.dailydev.controller;
 
-import br.com.yuri.dailydev.dto.DailyEntryRequest;
-import br.com.yuri.dailydev.dto.DailyEntryResponse;
+import br.com.yuri.dailydev.dto.request.DailyEntryRequest;
+import br.com.yuri.dailydev.dto.response.DailyEntryResponse;
 import br.com.yuri.dailydev.mapper.DailyEntryMapper;
 import br.com.yuri.dailydev.model.DailyEntry;
 import br.com.yuri.dailydev.service.DailyEntryService;

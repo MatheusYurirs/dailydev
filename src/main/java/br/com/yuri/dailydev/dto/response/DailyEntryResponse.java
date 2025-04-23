@@ -1,4 +1,4 @@
-package br.com.yuri.dailydev.dto;
+package br.com.yuri.dailydev.dto.response;
 
 import br.com.yuri.dailydev.model.enums.HumorDoDia;
 import com.fasterxml.jackson.annotation.JsonFormat;

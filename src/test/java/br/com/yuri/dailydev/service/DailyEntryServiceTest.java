@@ -1,7 +1,9 @@
 
 package br.com.yuri.dailydev.service;
 
+import br.com.yuri.dailydev.dto.response.DailyEntryResponse;
 import br.com.yuri.dailydev.exception.ResourceNotFoundException;
+import br.com.yuri.dailydev.mapper.DailyEntryMapper;
 import br.com.yuri.dailydev.model.DailyEntry;
 import br.com.yuri.dailydev.repository.DailyEntryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -113,6 +115,37 @@ public class DailyEntryServiceTest {
         });
 
         verify(dailyEntryRepository, times(1)).existsById(id);
+    }
+
+
+    @Test
+    void testUpdateById_ThrowsException_WhenIdDoesNotExist() {
+        Long id = 123L;
+        DailyEntry newEntry = new DailyEntry();
+        newEntry.setData(LocalDate.now());
+
+        when(dailyEntryRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> dailyEntryService.updateById(id, newEntry));
+    }
+
+    @Test
+    void testToResponseList_ConvertsEntityListToResponseList() {
+        DailyEntry entry1 = new DailyEntry();
+        entry1.setId(1L);
+        entry1.setData(LocalDate.of(2025, 4, 18));
+
+        DailyEntry entry2 = new DailyEntry();
+        entry2.setId(2L);
+        entry2.setData(LocalDate.of(2025, 4, 19));
+
+        List<DailyEntry> entityList = List.of(entry1, entry2);
+
+        List<DailyEntryResponse> responseList = DailyEntryMapper.toResponseList(entityList);
+
+        assertEquals(2, responseList.size());
+        assertEquals(entry1.getId(), responseList.get(0).getId());
+        assertEquals(entry2.getId(), responseList.get(1).getId());
     }
 
 

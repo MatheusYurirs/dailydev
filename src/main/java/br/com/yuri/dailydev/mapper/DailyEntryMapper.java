@@ -1,8 +1,10 @@
 package br.com.yuri.dailydev.mapper;
 
-import br.com.yuri.dailydev.dto.DailyEntryRequest;
-import br.com.yuri.dailydev.dto.DailyEntryResponse;
+import br.com.yuri.dailydev.dto.request.DailyEntryRequest;
+import br.com.yuri.dailydev.dto.response.DailyEntryResponse;
 import br.com.yuri.dailydev.model.DailyEntry;
+
+import java.util.List;
 
 public class DailyEntryMapper {
 
@@ -30,6 +32,12 @@ public class DailyEntryMapper {
                 entry.getAnotacoes(),
                 entry.getCriadoEm()
         );
+    }
+
+    public static List<DailyEntryResponse> toResponseList(List<DailyEntry> entries) {
+        return entries.stream()
+                .map(DailyEntryMapper::toResponse)
+                .toList();
     }
 
 }
