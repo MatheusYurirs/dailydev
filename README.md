@@ -30,7 +30,6 @@ Tudo isso com persistência em banco de dados, documentação automática via Sw
 - ✅ **Spring Validation**
 - ✅ **Flyway (Migração automática do banco)**
 - ✅ **PostgreSQL**
-- ✅ **Swagger OpenAPI (Springdoc)**
 - ✅ **Docker e Docker Compose**
 - ✅ **Lombok (ou getters/setters manuais)**
 - ✅ **Maven**
