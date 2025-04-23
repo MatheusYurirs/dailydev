@@ -8,26 +8,42 @@ O **DailyDev** é um projeto backend desenvolvido em **Java com Spring Boot**, c
 - Quais foram os desafios enfrentados
 - E anotações livres
 
+Agora com autenticação segura! 🔐
+
 Tudo isso com persistência em banco de dados, documentação automática via Swagger e pronto para produção com Docker! 🐳
 
 ---
+
 ## 📌 Versão Atual
 
-`v1.0.0` — Primeira versão estável com CRUD completo, Swagger, validações, tratamento de exceções e Docker.
+`v1.1.0` — Adicionadas as funcionalidades de autenticação com **Spring Security + JWT**, incluindo login, registro de usuários e proteção de endpoints.
 
+---
 
 ## 📚 Tecnologias Utilizadas
 
 - ✅ **Java 17**
 - ✅ **Spring Boot 3.x**
 - ✅ **Spring Web**
+- ✅ **Spring Security**
+- ✅ **JWT (JSON Web Token)**
 - ✅ **Spring Validation**
-- ✅ **Flyway** (Migração automática do banco)
+- ✅ **Flyway (Migração automática do banco)**
 - ✅ **PostgreSQL**
 - ✅ **Swagger OpenAPI (Springdoc)**
 - ✅ **Docker e Docker Compose**
 - ✅ **Lombok (ou getters/setters manuais)**
 - ✅ **Maven**
+
+---
+
+## 🔐 Autenticação
+
+- Endpoint de cadastro: `POST /auth/register`
+- Endpoint de login: `POST /auth/login`
+- Token JWT gerado ao fazer login
+- Uso do token com `Bearer` em headers para acessar endpoints protegidos
+- Validação automática de token e autenticação com `SecurityFilter`
 
 ---
 
@@ -40,6 +56,8 @@ Tudo isso com persistência em banco de dados, documentação automática via Sw
 | `GET` | `/dailyentry/{id}` | Retorna um registro específico |
 | `PUT` | `/dailyentry/{id}` | Atualiza um registro |
 | `DELETE` | `/dailyentry/{id}` | Remove um registro |
+
+> ⚠️ Os endpoints estão protegidos. É necessário estar autenticado para utilizá-los.
 
 Todos os endpoints estão **documentados via Swagger**!
 
@@ -80,11 +98,6 @@ As migrations já estão configuradas para criar a tabela daily_entry automatica
 
 Isso inicia o backend local na porta 8080
 
-# #🔍 Acessar a Documentação Swagger
-Após subir a aplicação, acesse:
-```
-http://localhost:8080/swagger-ui/index.html
-```
 
 # #✨ Autor
 Desenvolvido por Matheus Yuri Silva 💙
